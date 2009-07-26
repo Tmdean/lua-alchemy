@@ -4,3 +4,4 @@ Flash and Flex demos of lua-alchemy in action.
                     controlled by Lua code.
   MiniDemo/ - Minimalistic Lua Alchemy demo.
   Rapid/ - Rapid development prototype.
+  Control/ - Invisible control SWF
