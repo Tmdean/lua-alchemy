@@ -267,7 +267,7 @@
       }
     ]]>
   </mx:Script>
-  <mx:Panel title="Lua" width="100%" height="100%" layout="vertical"
+  <mx:Panel title="Lua" width="625" height="100%" layout="vertical"
     paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
     <mx:HBox>
       <mx:Label text="Sample Code:"/>
@@ -279,7 +279,7 @@
     </mx:HBox>
     <mx:TextArea id="luaCodeTA" width="100%" height="100%" condenseWhite="false"
       paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" wordWrap="false"
-      change="isCodeChanged = true"/>
+      change="isCodeChanged = true" fontFamily="Courier New" fontSize="11"/>
     <mx:HBox horizontalAlign="center">
       <mx:Button id="runBtn" label="Run!" click="onRunClicked(event)" toolTip="Run the Lua code"/>
       <mx:Button label="Reset" click="resetLua()" toolTip="Reset the Lua Context"
