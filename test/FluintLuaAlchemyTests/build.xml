@@ -116,6 +116,7 @@
       <compiler.include-libraries dir="${alchemy.release.dir}" append="true">
         <include name="lua-alchemy.swc" />
       </compiler.include-libraries>
+      <default-size width="1024" height="768" />
     </mxmlc>
   </target>
 
@@ -132,6 +133,7 @@
       <compiler.include-libraries dir="${alchemy.debug.dir}" append="true">
         <include name="lua-alchemy.swc" />
       </compiler.include-libraries>
+      <default-size width="1024" height="768" />
     </mxmlc>
   </target>
 
