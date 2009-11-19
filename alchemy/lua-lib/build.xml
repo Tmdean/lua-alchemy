@@ -54,9 +54,10 @@
         target: generate.assets
        - - - - - - - - - - - - - - - - - -->
   <target name="generate.assets">
-    <exec executable="${build.tools.dir}/gen_assets.sh" dir="${basedir}"
-      input="${build.tools.dir}/LuaAssets.as.template"
-      output="${assets.class.as}">
+      <exec executable="bash" dir="${basedir}"
+	  input="${build.tools.dir}/LuaAssets.as.template"
+	  output="${assets.class.as}">
+      <arg value="${build.tools.dir}/gen_assets.sh"/>
       <arg path="${assets.dir}"/>
       <arg value="${assets.class.name}"/>
       <arg value="${assets.dir}"/>

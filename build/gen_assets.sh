@@ -15,6 +15,10 @@ fi
 
 # NOTE: Package name may be empty
 
+# Change \s to /s
+FILESYSTEM_ROOT=$(echo $FILESYSTEM_ROOT | sed -e 's/\\/\//g')
+ASSETS_PREFIX=$(echo $ASSETS_PREFIX | sed -e 's/\\/\//g')
+
 # Ensure paths have a single trailing slash
 FILESYSTEM_ROOT_NOSLASH=$(echo $FILESYSTEM_ROOT | sed -e 's/\/*$//')
 FILESYSTEM_ROOT=${FILESYSTEM_ROOT_NOSLASH}/
