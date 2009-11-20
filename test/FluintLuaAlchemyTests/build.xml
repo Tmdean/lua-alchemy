@@ -11,7 +11,7 @@
       </not>
     </condition>
     Error!
-    You need to set FLEX_HOME environement variable (path to Flex SDK)
+    You need to set FLEX_HOME environment variable (path to Flex SDK)
     export FLEX_HOME=/Applications/Adobe\ Flex\ Builder\ 3/sdks/3.2.0
   </fail>
 
@@ -19,14 +19,23 @@
 
   <!-- dirs -->
 
+  <property name="assets.class.name" value="LuaAssets"/>
+  <property name="assets.package.name" value=""/>
+
   <property name="build.dir" location="build/"/>
   <property name="release.build.dir" location="${build.dir}/release/"/>
   <property name="debug.build.dir" location="${build.dir}/debug/"/>
   <property name="src.dir" location="src/"/>
+  <property name="assets.dir" location="assets/"/>
   <property name="lib.dir" location="libs/"/>
   <property name="alchemy.release.dir" location="../../alchemy/lua-alchemy/build/release"/>
   <property name="alchemy.debug.dir" location="../../alchemy/lua-alchemy/build/debug"/>
   <property name="flex.config.xml" location="${FLEX_HOME}/frameworks/flex-config.xml"/>
+  <property name="build.tools.dir" location="../../build"/>
+  <property name="assets.class.dir" location="${src.dir}/${assets.package.name}/"/>
+  <property name="assets.class.as" location="${assets.class.dir}/${assets.class.name}.as"/>
+
+  <property name="fluint.swc" value="fluint-1.1.1-gettests.swc"/>
 
   <!-- files -->
   <property name="main.application" location="${src.dir}/FlexTestRunner.mxml"/>
@@ -64,6 +73,20 @@
   </target>
 
   <!-- - - - - - - - - - - - - - - - - -
+        target: generate.assets
+       - - - - - - - - - - - - - - - - - -->
+  <target name="generate.assets">
+    <exec executable="${build.tools.dir}/gen_assets.sh" dir="${basedir}"
+      input="${build.tools.dir}/LuaAssets.as.template"
+      output="${assets.class.as}">
+      <arg path="${assets.dir}"/>
+      <arg value="${assets.class.name}"/>
+      <arg value="${assets.dir}"/>
+      <arg value="${assets.package.name}"/>
+    </exec>
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - -
           target: make.release.wrapper
          - - - - - - - - - - - - - - - - - -->
   <target name="make.release.wrapper">
@@ -76,7 +99,7 @@
       version-major="${swf.version.major}"
       version-minor="${swf.version.minor}"
       version-revision="${swf.version.revision}"
-      application="${swf.application}}"
+      application="${swf.application}"
       swf="${swf.swf}"
       bgcolor="${swf.bgcolor}"
       output="${release.build.dir}" />
@@ -96,7 +119,7 @@
       version-major="${swf.version.major}"
       version-minor="${swf.version.minor}"
       version-revision="${swf.version.revision}"
-      application="${swf.application}}"
+      application="${swf.application}"
       swf="${swf.swf}"
       bgcolor="${swf.bgcolor}"
       output="${debug.build.dir}" />
@@ -106,12 +129,12 @@
   <!-- - - - - - - - - - - - - - - - - -
         target: compile.release
        - - - - - - - - - - - - - - - - - -->
-  <target name="compile.release">
+  <target name="compile.release" depends="generate.assets">
     <mxmlc file="${main.application}" output="${main.application.release.out}"
       target-player="10.0.0">
       <load-config filename="${flex.config.xml}" />
       <compiler.include-libraries dir="${lib.dir}" append="true">
-        <include name="fluint_v1.swc" />
+        <include name="${fluint.swc}" />
       </compiler.include-libraries>
       <compiler.include-libraries dir="${alchemy.release.dir}" append="true">
         <include name="lua-alchemy.swc" />
@@ -123,12 +146,12 @@
   <!-- - - - - - - - - - - - - - - - - -
         target: compile.debug
        - - - - - - - - - - - - - - - - - -->
-  <target name="compile.debug">
+  <target name="compile.debug" depends="generate.assets">
     <mxmlc debug="true" file="${main.application}" output="${main.application.debug.out}"
       target-player="10.0.0">
       <load-config filename="${flex.config.xml}" />
       <compiler.include-libraries dir="${lib.dir}" append="true">
-        <include name="fluint_v1.swc" />
+        <include name="${fluint.swc}" />
       </compiler.include-libraries>
       <compiler.include-libraries dir="${alchemy.debug.dir}" append="true">
         <include name="lua-alchemy.swc" />
@@ -143,6 +166,7 @@
   <target name="clear">
     <delete failonerror="false">
       <fileset dir="${build.dir}" includes="**/*.*" />
+      <fileset dir="${assets.class.dir}" includes="${assets.class.as}" />
     </delete>
   </target>
 
@@ -153,5 +177,6 @@
     <mkdir dir="${build.dir}"/>
     <mkdir dir="${release.build.dir}"/>
     <mkdir dir="${debug.build.dir}"/>
+    <mkdir dir="${assets.class.dir}"/>
   </target>
 </project>

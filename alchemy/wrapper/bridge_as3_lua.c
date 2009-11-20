@@ -171,9 +171,13 @@ AS3_Val create_as3_value_from_lua_stack(
     ret = AS3_Array("");
     for (i = start; i <= end; ++i)
     {
+      AS3_Val as3Value;
+
       /*SPAM(("create_as3_value_from_lua_stack() + 1 begin"));*/
       value = get_as3_value_from_lua_stack(L, i);
-      AS3_CallS("push", ret, AS3_Array("AS3ValType", value));
+      as3Value = AS3_Array("AS3ValType", value);
+      AS3_CallS("push", ret, as3Value);
+      AS3_Release(as3Value);
       /*SPAM(("create_as3_value_from_lua_stack() + 1 end"));*/
     }
   }
@@ -235,11 +239,11 @@ int push_as3_to_lua_stack_if_convertible(lua_State * L, AS3_Val val)
   else if (AS3_InstanceOf(val, String_class))
   {
     /* TODO: Release?! */
-    AS3_Val lengthVal = AS3_GetS(val, "length");
-    size_t length = AS3_IntValue(lengthVal);
-    AS3_Malloced_Str str = AS3_StringValue(val);
+    size_t length = 0;
+    AS3_Malloced_Str str = get_string_bytes(val, &length);
 
     lua_pushlstring(L, str, length);
+
     free(str);
   }
   else if (AS3_InstanceOf(val, Boolean_class))

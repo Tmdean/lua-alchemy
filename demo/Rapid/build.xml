@@ -11,7 +11,7 @@
       </not>
     </condition>
     Error!
-    You need to set FLEX_HOME environement variable (path to Flex SDK)
+    You need to set FLEX_HOME environment variable (path to Flex SDK)
     export FLEX_HOME=/Applications/Adobe\ Flex\ Builder\ 3/sdks/3.2.0
   </fail>
 
@@ -97,7 +97,7 @@
       version-major="${swf.version.major}"
       version-minor="${swf.version.minor}"
       version-revision="${swf.version.revision}"
-      application="${swf.application}}"
+      application="${swf.application}"
       swf="${swf.swf}"
       bgcolor="${swf.bgcolor}"
       output="${release.build.dir}" />
@@ -117,7 +117,7 @@
       version-major="${swf.version.major}"
       version-minor="${swf.version.minor}"
       version-revision="${swf.version.revision}"
-      application="${swf.application}}"
+      application="${swf.application}"
       swf="${swf.swf}"
       bgcolor="${swf.bgcolor}"
       output="${debug.build.dir}" />

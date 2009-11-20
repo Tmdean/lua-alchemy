@@ -43,6 +43,17 @@ package wrapperSuite.tests
       doString(script, [true, "Name: OldDude age: 999"]);
     }
 
+    public function testCallInstanceNoReturnMultibyte():void
+    {
+      var script:String = ( <![CDATA[
+        local v = as3.class.wrapperSuite.tests.TestWrapperHelper.new()
+        v.setNameAge("Александр Сергеевич ПУШКИН", 38)
+        return as3.tolua(v.nameAge)
+      ]]> ).toString();
+
+      doString(script, [true, "Name: Александр Сергеевич ПУШКИН age: 38"]);
+    }
+
     public function testCallInstanceReturnNumber():void
     {
       var script:String = ( <![CDATA[
@@ -438,7 +449,7 @@ package wrapperSuite.tests
         return as3.toobject({ [function() end] = 2 })
       ]]> ).toString();
 
-      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:18: unsupported key type\nstack traceback:\n\t[C]: in function 'error'\n\tbuiltin://lua_alchemy/as3/toobject.lua:18: in function <builtin://lua_alchemy/as3/toobject.lua:6>\n\t(tail call): ?\n\t(tail call): ?"]);
+      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:19: unsupported key type\nstack traceback:\n\t[C]: in function 'error'\n\tbuiltin://lua_alchemy/as3/toobject.lua:19: in function <builtin://lua_alchemy/as3/toobject.lua:7>\n\t(tail call): ?\n\t(tail call): ?"]);
     }
 
     public function testToObjectNoNumericKeyConversion():void
@@ -447,7 +458,7 @@ package wrapperSuite.tests
         return as3.toobject({ [1] = 2 })
       ]]> ).toString();
 
-      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:18: unsupported key type\nstack traceback:\n\t[C]: in function 'error'\n\tbuiltin://lua_alchemy/as3/toobject.lua:18: in function <builtin://lua_alchemy/as3/toobject.lua:6>\n\t(tail call): ?\n\t(tail call): ?"]);
+      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:19: unsupported key type\nstack traceback:\n\t[C]: in function 'error'\n\tbuiltin://lua_alchemy/as3/toobject.lua:19: in function <builtin://lua_alchemy/as3/toobject.lua:7>\n\t(tail call): ?\n\t(tail call): ?"]);
     }
 
     public function testToObjectRecursion():void
@@ -458,7 +469,7 @@ package wrapperSuite.tests
         return as3.toobject(t)
       ]]> ).toString();
 
-      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:21: recursion detected\nstack traceback:\n\t[C]: in function 'assert'\n\tbuiltin://lua_alchemy/as3/toobject.lua:21: in function 'impl'\n\tbuiltin://lua_alchemy/as3/toobject.lua:24: in function <builtin://lua_alchemy/as3/toobject.lua:6>\n\t(tail call): ?\n\t(tail call): ?"]);
+      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:22: recursion detected\nstack traceback:\n\t[C]: in function 'assert'\n\tbuiltin://lua_alchemy/as3/toobject.lua:22: in function 'impl'\n\tbuiltin://lua_alchemy/as3/toobject.lua:25: in function <builtin://lua_alchemy/as3/toobject.lua:7>\n\t(tail call): ?\n\t(tail call): ?"]);
     }
 
     public function testToArraySimpleTypes():void
@@ -665,7 +676,7 @@ package wrapperSuite.tests
         return as3.toarray(t)
       ]]> ).toString();
 
-      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:48: recursion detected\nstack traceback:\n\t[C]: in function 'assert'\n\tbuiltin://lua_alchemy/as3/toobject.lua:48: in function 'impl'\n\tbuiltin://lua_alchemy/as3/toobject.lua:51: in function <builtin://lua_alchemy/as3/toobject.lua:41>\n\t(tail call): ?\n\t(tail call): ?"]);
+      doString(script, [false, "builtin://lua_alchemy/as3/toobject.lua:49: recursion detected\nstack traceback:\n\t[C]: in function 'assert'\n\tbuiltin://lua_alchemy/as3/toobject.lua:49: in function 'impl'\n\tbuiltin://lua_alchemy/as3/toobject.lua:52: in function <builtin://lua_alchemy/as3/toobject.lua:42>\n\t(tail call): ?\n\t(tail call): ?"]);
     }
 
     public function testPrintOverload():void
